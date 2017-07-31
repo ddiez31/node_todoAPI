@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ldevernay/node_todoAPI/issues"
   },
-  "homepage": "https://github.com/ldevernay/node_todoAPI#readme"
+  "homepage": "https://github.com/ldevernay/node_todoAPI#readme",
+  "dependencies": {
+    "mongodb": "^2.2.30"
+  }
 }
