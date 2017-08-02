@@ -7,7 +7,7 @@ const {User} = require('./../server/models/user');
 
 
 // ===================TODOS====================
-let id = "qgfzqrgqrz";
+let id = "5981babc45f1304198a1dd3b";
 
 if (!ObjectID.isValid(id)){
   console.log('Invalid ID.');
@@ -15,9 +15,9 @@ if (!ObjectID.isValid(id)){
 
 Todo.findById(id).then((todo) => {
   if(!todo){
-    return console.log('Id not found.');
+    return console.log('User id not found.');
   }
-  console.log('Todo by id: ', todo);
+  console.log('Todo by id: ', JSON.stringify(todo, undefined, 2));
 }).catch((e) => {
   console.log(e);
 });
