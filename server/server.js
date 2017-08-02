@@ -14,16 +14,17 @@ let Todo = mongoose.model('Todo', {
     trim: true
   },
   completed: {
-    type: Boolean
+    type: Boolean,
+    default: false
   },
   completedAt: {
-    type: Number
+    type: Number,
+    default: null
   }
 });
 
 let newTodo = new Todo({
-  text: '    edit package.json    ',
-  completed: true
+  text: 'start tests'
 });
 
 newTodo.save().then((doc) => {
