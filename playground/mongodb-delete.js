@@ -29,4 +29,18 @@ MongoClient.connect('mongodb://localhost:27017/TodoAPI', (err, db) => {
   //   console.log(result);
   // });
   // db.close();
+
+  // db.collection('Users').deleteMany({
+  //   name: 'Bob'
+  // }).then((result) => {
+  //   console.log(result);
+  // });
+
+  db.collection('Users').findOneAndDelete({
+    name: 'Jake'
+  }).then((result) => {
+    console.log(result);
+  });
+
+
 });
