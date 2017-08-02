@@ -8,7 +8,10 @@ mongoose.connect('mongodb://localhost:27017/TodoAPI');
 
 let Todo = mongoose.model('Todo', {
   text: {
-    type: String
+    type: String,
+    required: true,
+    minlength: 3,
+    trim: true
   },
   completed: {
     type: Boolean
@@ -19,7 +22,7 @@ let Todo = mongoose.model('Todo', {
 });
 
 let newTodo = new Todo({
-  text: 'git init',
+  text: '    edit package.json    ',
   completed: true
 });
 
