@@ -62,8 +62,14 @@ describe('POST / todos', () => {
 
 });
 
-// describe('GET /todos', () => {
-//   it('should fetch all todos', (done) => {
-//
-//   });
-// });
+describe('GET /todos', () => {
+  it('should fetch all todos', (done) => {
+    request(app)
+    .get('/todos')
+    .expect(200)
+    .expect((res) => {
+      expect(res.body.todos.length).toBe(2);
+    })
+    .end(done);
+  });
+});
