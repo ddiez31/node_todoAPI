@@ -23,10 +23,10 @@ MongoClient.connect('mongodb://localhost:27017/TodoAPI', (err, db) => {
   // .then((result) => {
   //   console.log(result)
   // });
-  db.collection('Todos').findOneAndDelete({
-    completed: true
-  }).then((result) => {
-    console.log(result);
-  });
+  // db.collection('Todos').findOneAndDelete({
+  //   completed: true
+  // }).then((result) => {
+  //   console.log(result);
+  // });
   // db.close();
 });
