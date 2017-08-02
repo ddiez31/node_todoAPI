@@ -30,4 +30,22 @@ describe('POST / todos', () => {
       }).catch((err) => done(err));
     });
   });
+
+  it('should not create todo with invalid text data', (done) => {
+    request(app)
+    .post('/todos')
+    .send({})
+    .expect(400)
+    .end((err, res) => {
+      if(err){
+        return done(err);
+      }
+
+      Todo.find().then((todos) => {
+        expect(todos.length).toBe(0);
+        done();
+      }).catch((err) => done(err));
+    });
+  });
+
 });
