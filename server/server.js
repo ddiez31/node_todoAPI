@@ -8,6 +8,9 @@ let {mongoose} = require('./db/mongoose');
 let {Todo} = require('./models/todo');
 let {User} = require('./models/user');
 
+// Set port to env variable for Heroku, 3000 for dev
+const port = process.env.PORT || 3000;
+
 let app = express();
 
 app.use(bodyParser.json());
@@ -50,8 +53,8 @@ app.get('/todos/:id', (req, res) => {
   res.status(400).send(err);
 });
 
-app.listen(3000, () => {
-  console.log('Started on port 3000');
+app.listen(port, () => {
+  console.log(`API up and listening to ${port}`);
 });
 
 
