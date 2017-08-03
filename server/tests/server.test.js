@@ -8,7 +8,9 @@ const {Todo} = require('./../models/todo');
 const todos = [
   {
     _id: new ObjectID(),
-    text: 'first test todo'
+    text: 'first test todo',
+    completed: true,
+    completedAt: '1'
   },
   {
     _id: new ObjectID(),
@@ -142,5 +144,33 @@ it('should return 404 if object id is invalid', (done) => {
   .expect(404)
   .end(done);
 });
+});
 
+describe('PATCH /todos/id', () => {
+  it('should update the todo', (done) => {
+    var hexId = todos[0]._id.toHexString();
+
+    request(app)
+    .patch(`/todos/${hexId}`)
+    .send({
+      "text": "test",
+      "completed": true
+    })
+    .expect(200)
+    .expect((res) => {
+      expect(res.body.todo.completed).toBe(true);
+      expect(res.body.todo.text).toBe("test");
+      expect(res.body.todo.completedAt).toExist();
+    })
+    .end((err, res) => {
+      if(err){
+        return done(err);
+      }
+      done();
+    });
+  });
+
+  // it('should clear completedAt when todo is not completed', (done) => {
+  //
+  // });
 });
