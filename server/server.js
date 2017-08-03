@@ -1,3 +1,5 @@
+require('./config/config');
+
 const {ObjectID} = require('mongodb');
 const _ = require('lodash');
 const express = require('express');
@@ -8,7 +10,7 @@ let {Todo} = require('./models/todo');
 let {User} = require('./models/user');
 
 // Set port to env variable for Heroku, 3000 for dev
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 let app = express();
 
