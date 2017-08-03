@@ -16,3 +16,5 @@ Todo.findOneAndRemove({
 }).then((todo) => {
   console.log(JSON.stringify(todo, undefined, 2));
 });
+
+//Also : Todo.findByIdAndRemove()
