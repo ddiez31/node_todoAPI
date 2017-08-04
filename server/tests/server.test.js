@@ -4,6 +4,7 @@ const {ObjectID} = require('mongodb');
 
 const {app} = require('./../server');
 const {Todo} = require('./../models/todo');
+const {User} = require('./../models/user');
 
 const todos = [
   {
@@ -18,13 +19,32 @@ const todos = [
   }
 ];
 
+const users = [
+  {
+    _id: new ObjectID(),
+    email: "bobleblob@bob.com",
+    password: "bobleblob"
+  },
+  {
+    _id: new ObjectID(),
+    email: "bobleblobaussi@bob.com",
+    password: "bobleblobaussi"
+  }
+];
+
 beforeEach((done) => {
-  Todo.remove({}).then(() => {
+  Todo.remove({})
+  .then(() => {
     return Todo.insertMany(todos);
-  }).then(() => done());
+  })
+  .then(() => User.remove({})
+  .then(() => {
+    return User.insertMany(users);
+  }))
+  .then(() => done());
 });
 
-describe('POST / todos', () => {
+describe('POST /todos', () => {
   it('should create a new todo', (done) => {
     let text = 'test todo text';
 
@@ -192,5 +212,52 @@ describe('PATCH /todos/id', () => {
       }
       done();
     });
+  });
+});
+
+describe('POST /users', () => {
+  it('should create a user with provided email and password', (done) => {
+    let user_test = {
+      email: "encorebob@bob.com",
+      password: "encorebob"
+    };
+    request(app)
+    .post('/users')
+    .send(user_test)
+    .expect(200)
+    .expect((res) => {
+      expect(res.body.email).toBe(user_test.email);
+      expect(res.body.password).toBe(user_test.password);
+    })
+    .end((err, res) => {
+      if(err){
+        return done(err);
+      }
+      done();
+    });
+  });
+
+  it('should return 400 status on invalid email', (done) => {
+    let user_test = {
+      email: "encorebob.com",
+      password: "encorebob"
+    };
+    request(app)
+    .post('/users')
+    .send(user_test)
+    .expect(400)
+    .end(done);
+  });
+
+  it('should return 400 status on invalid password', (done) => {
+    let user_test = {
+      email: "encorebob2@bob.com",
+      password: "bob"
+    };
+    request(app)
+    .post('/users')
+    .send(user_test)
+    .expect(400)
+    .end(done);
   });
 });
