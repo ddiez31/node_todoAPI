@@ -260,3 +260,12 @@ describe('POST /users', () => {
     .end(done);
   });
 });
+
+describe('test GET /users/me', () => {
+  it('should return 401 if no x-auth header', (done) => {
+    request(app)
+    .get('/users/me')
+    .expect(401)
+    .end(done);
+  });
+});
