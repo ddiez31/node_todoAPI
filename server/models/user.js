@@ -36,6 +36,7 @@ UserSchema.methods.toJSON = function() {
   let user = this;
   let userObject = user.toObject();
 
+  // Only keep _id and email in returned user object
   return _.pick(userObject, ['_id', 'email']);
 };
 
