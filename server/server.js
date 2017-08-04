@@ -16,6 +16,9 @@ let app = express();
 
 app.use(bodyParser.json());
 
+
+//===============TODOS====================
+
 app.post('/todos', (req, res) => {
   let todo = new Todo({
     text: req.body.text
@@ -98,6 +101,24 @@ app.patch('/todos/:id', (req, res) => {
   })
 });
 
+
+//===============USERS====================
+app.post('/users', (req, res) => {
+  let body = _.pick(req.body, ['email', 'password']);
+  let user = new User({
+    email: body.email,
+    password: body.password
+  });
+
+  user.save().then((doc) => {
+    res.send(doc);
+  }, (err) => {
+    res.status(400).send(err);
+  });
+});
+
+
+//===============MISC====================
 app.listen(port, () => {
   console.log(`API up and listening to ${port}`);
 });
