@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 let {mongoose} = require('./db/mongoose');
 let {Todo} = require('./models/todo');
 let {User} = require('./models/user');
+let {authenticate} = require('./middleware/authenticate');
 
 // Set port to env variable for Heroku, 3000 for dev
 const port = process.env.PORT;
@@ -117,18 +118,8 @@ app.post('/users', (req, res) => {
   });
 });
 
-app.get('/users/me', (req, res) => {
-  let token = req.header('x-auth');
-
-  let user = User.findByToken(token).then((user) => {
-    if(!user){
-      return Promise.reject();
-    }
-
-    res.send(user);
-  }).catch((e) => {
-    res.status(401).send();
-  });
+app.get('/users/me', authenticate, (req, res) => {
+  res.send(req.user);
 });
 
 //===============MISC====================
