@@ -227,7 +227,6 @@ describe('POST /users', () => {
     .expect(200)
     .expect((res) => {
       expect(res.body.email).toBe(user_test.email);
-      expect(res.body.password).toBe(user_test.password);
     })
     .end((err, res) => {
       if(err){
