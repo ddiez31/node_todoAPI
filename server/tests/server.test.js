@@ -182,10 +182,12 @@ describe('PATCH /todos/id', () => {
 });
 
 describe('POST /users', () => {
-  it('should create a user with provided email and password', (done) => {
+  it('should create a user', (done) => {
+    let email = "encorebob@bob.com";
+    let password = "encorebob";
     let user_test = {
-      email: "encorebob@bob.com",
-      password: "encorebob"
+      email,
+      password
     };
     request(app)
     .post('/users')
@@ -193,11 +195,17 @@ describe('POST /users', () => {
     .expect(200)
     .expect((res) => {
       expect(res.body.email).toBe(user_test.email);
+      expect(res.headers['x-auth']).toExist();
+      expect(res.body._id).toExist();
     })
     .end((err, res) => {
       if(err){
         return done(err);
       }
+      User.findOne({email}).then((user) => {
+        expect(user).toExist();
+        expect(user.password).toNotBe(user_test.password);
+      })
       done();
     });
   });
@@ -222,6 +230,17 @@ describe('POST /users', () => {
     request(app)
     .post('/users')
     .send(user_test)
+    .expect(400)
+    .end(done);
+  });
+
+  it('should not create user if email already in use', (done) => {
+    request(app)
+    .post('/users')
+    .send({
+      email: users[0].email,
+      password: 'detoutefaconcamarchepas'
+    })
     .expect(400)
     .end(done);
   });
