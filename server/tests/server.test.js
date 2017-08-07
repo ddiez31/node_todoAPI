@@ -246,7 +246,7 @@ describe('POST /users', () => {
   });
 });
 
-describe('test GET /users/me', () => {
+describe('GET /users/me', () => {
   it('should return user if authenticated', (done) => {
     request(app)
     .get('/users/me')
