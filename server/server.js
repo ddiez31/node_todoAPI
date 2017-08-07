@@ -4,6 +4,7 @@ const {ObjectID} = require('mongodb');
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcryptjs');
 
 let {mongoose} = require('./db/mongoose');
 let {Todo} = require('./models/todo');
@@ -120,6 +121,27 @@ app.post('/users', (req, res) => {
 
 app.get('/users/me', authenticate, (req, res) => {
   res.send(req.user);
+});
+
+app.post('/users/login', (req, res) => {
+  let body = _.pick(req.body, ['email', 'password']);
+
+  User.findByCredentials(body.email, body.password).then((user) =>{
+    res.send(user);
+  }).catch((e) => {
+    res.status(400).send(e);
+  });
+
+  // User.findOne({email}).then((user) => {
+  //   bcrypt.genSalt(10, (err, salt) => {
+  //     bcrypt.hash(password, salt, (err, hash) => {
+  //       bcrypt.compare("B4c0/\/", hash, function(err, res) {
+  //         res.header('x-auth', user.tokens[0].token).send(user);
+  //       });
+  //     });
+  //   });
+  // });
+
 });
 
 //===============MISC====================

@@ -58,4 +58,4 @@ var hashedPassword = '$2a$10$9CkU65DCfues2MJ/CXICXO5gPT.ZNgFfgx5VpGrEl3z6Ht6/Tv3
 
 bcrypt.compare(password, hashedPassword, (err, res) => {
   console.log(res);
-})
+});
