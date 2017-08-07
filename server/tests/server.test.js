@@ -5,9 +5,10 @@ const {ObjectID} = require('mongodb');
 const {app} = require('./../server');
 const {Todo} = require('./../models/todo');
 const {User} = require('./../models/user');
-const {todos, users, populate} = require('./seed/seed');
+const {todos, users, populateTodos, populateUsers} = require('./seed/seed');
 
-beforeEach(populate);
+beforeEach(populateUsers);
+beforeEach(populateTodos);
 
 describe('POST /todos', () => {
   it('should create a new todo', (done) => {
