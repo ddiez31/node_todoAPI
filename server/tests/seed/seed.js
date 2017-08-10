@@ -13,11 +13,13 @@ const todos = [
     _id: new ObjectID(),
     text: 'first test todo',
     completed: true,
-    completedAt: '1'
+    completedAt: '1',
+    _creator: userOneId
   },
   {
     _id: new ObjectID(),
-    text : 'second test todo'
+    text : 'second test todo',
+    _creator: userTwoId
   }
 ];
 
