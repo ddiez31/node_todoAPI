@@ -177,6 +177,7 @@ describe('PATCH /todos/id', () => {
 
     request(app)
     .patch(`/todos/${hexId}`)
+    .set('x-auth', users[0].tokens[0].token)
     .send({
       text,
       "completed": true
@@ -195,6 +196,26 @@ describe('PATCH /todos/id', () => {
     });
   });
 
+  it('should not update a todo created by another user', (done) => {
+    let hexId = todos[0]._id.toHexString();
+    let text = 'test';
+
+    request(app)
+    .patch(`/todos/${hexId}`)
+    .set('x-auth', users[1].tokens[0].token)
+    .send({
+      text,
+      "completed": true
+    })
+    .expect(404)
+    .end((err, res) => {
+      if(err){
+        return done(err);
+      }
+      done();
+    });
+  });
+
   it('should clear completedAt when todo is not completed', (done) => {
     var hexId = todos[0]._id.toHexString();
 
@@ -204,6 +225,7 @@ describe('PATCH /todos/id', () => {
       "text": "test",
       "completed": false
     })
+    .set('x-auth', users[0].tokens[0].token)
     .expect(200)
     .expect((res) => {
       expect(res.body.todo.completed).toBe(false);
